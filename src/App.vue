@@ -11,14 +11,14 @@
       <button @:click="increseLike(i)">좋아요</button>
       <span>{{ movie.like }}</span>
       <p>
-        <button @click="isModal=true">상세보기</button>
+        <button @click="isModal=true; selectedMovie=i">상세보기</button>
       </p>
     </div>
   </div>
   
   <div class="modal" v-if="isModal">
     <div class="inner">
-      <h3>Detail</h3>
+      <h3>{{ data[selectedMovie].title }}</h3>
       <p>영화 상세정보</p>
       <button @click="isModal=fasle">닫기</button>
     </div>
@@ -26,35 +26,17 @@
 </template>
 
 <script>
+  import data from './assets/movies';
+  console.log(data)
+  
+
   export default{
     name : 'App',
     data(){
       return {
         isModal: false, 
-        data: [
-          {
-            title:"노량",
-            year: 2023,
-            category: '액션, 드라마',
-            textRed: "color : red",
-            like: 0,
-            imgUrl : "./assets/노량.jpg"
-          },
-          {
-            title:"아쿠아맨과 로스트 킹덤",
-            year: 2023,
-            category: "액션, 판타지, 어드벤쳐",
-            like: 0,
-            imgUrl: "./assets/아쿠아맨.png"
-          },
-          {
-            title: "3월의 휴가",
-            year:2023,
-            category:"판타지, 드라마",
-            like: 0,
-            imgUrl : "./assets/3월.jpg"
-          }
-        ]
+        data : data,
+        selectedMovie: 0,
       }
     },
     methods:{
