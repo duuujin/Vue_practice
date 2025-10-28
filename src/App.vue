@@ -1,33 +1,23 @@
 <template>
-  <h1>영화 정보</h1>
-  <div v-for="(movie, i) in data" :key="i" class="item">
-    <figure>
-      <img :src="`${movie.imgUrl}`" :alt="movie.title" >
-    </figure>
-    <div class="info">
-      <h3 class="bg-yellow">{{ movie.title }}</h3>
-      <p>개봉 : {{ movie.year }}</p>
-      <p>장르 : {{ movie.category }}</p>
-      <button @:click="increseLike(i)">좋아요</button>
-      <span>{{ movie.like }}</span>
-      <p>
-        <button @click="isModal=true; selectedMovie=i">상세보기</button>
-      </p>
-    </div>
-  </div>
+  <Navbar />
+  <Event :text="text"/>
+  <SearchBar :data="data_temp" @searchMovie="searchMovie($event)"/>
+  <p>
+    <button @click="showAllMovie" >전체보기</button>
+  </p>
+  <Movies :data="data_temp" @openModal="isModal=true; selectedMovie=$event" @increseLike="increseLike($event)" />
+  <Modal :data="data" :isModal="isModal" :selectedMovie="selectedMovie" @closeModal="isModal=false"/>
   
-  <div class="modal" v-if="isModal">
-    <div class="inner">
-      <h3>{{ data[selectedMovie].title }}</h3>
-      <p>영화 상세정보</p>
-      <button @click="isModal=fasle">닫기</button>
-    </div>
-  </div>
 </template>
 
 <script>
   import data from './assets/movies';
-  console.log(data)
+  import Navbar from './components/Navbar.vue';
+  import Event from './components/Event.vue';
+  import Modal from './components/Modal.vue';
+  import Movies from './components/Movies.vue';
+  import SearchBar from './components/SearchBar.vue';
+  
   
 
   export default{
@@ -35,14 +25,38 @@
     data(){
       return {
         isModal: false, 
-        data : data,
+        data : data, // 원본
+        data_temp : [...data], // 사본
         selectedMovie: 0,
+        text : "NEPLIX 강렬한 운명의 드라마, 경기크리처",
       }
     },
     methods:{
-      increseLike(i){
-        this.data[i].like += 1;
+      increseLike(id){
+        // this.data[i].like += 1;
+        this.data.find(movie => {
+          if(movie.id == id){
+            movie.like += 1;
+          }
+        })
+      },
+      searchMovie(title){
+        // 영화 제목이 포함된 데이터를 반환
+        this.data_temp = this.data.filter(movie => {
+          return movie.title.includes(title);
+        })
+      },
+      showAllMovie(){
+        this.data_temp = [...this.data];
       }
+    },
+    components:{
+      Navbar : Navbar,
+      Event : Event,
+      Modal : Modal,
+      Movies : Movies,
+      SearchBar : SearchBar,
+
     }
   }
 </script>
