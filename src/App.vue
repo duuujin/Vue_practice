@@ -1,13 +1,12 @@
 <template>
   <Navbar />
-  <Event :text="text"/>
+  <Event :text="text[eventTextNum]"/>
   <SearchBar :data="data_temp" @searchMovie="searchMovie($event)"/>
   <p>
     <button @click="showAllMovie" >전체보기</button>
   </p>
   <Movies :data="data_temp" @openModal="isModal=true; selectedMovie=$event" @increseLike="increseLike($event)" />
   <Modal :data="data" :isModal="isModal" :selectedMovie="selectedMovie" @closeModal="isModal=false"/>
-  
 </template>
 
 <script>
@@ -19,7 +18,6 @@
   import SearchBar from './components/SearchBar.vue';
   
   
-
   export default{
     name : 'App',
     data(){
@@ -28,7 +26,12 @@
         data : data, // 원본
         data_temp : [...data], // 사본
         selectedMovie: 0,
-        text : "NEPLIX 강렬한 운명의 드라마, 경기크리처",
+        text: ["NEPLIX 강렬한 운명의 드라마, 경기크리처",
+          '디즈니 100주년 기념작, 위시',
+          '그날, 대한민국의 운명이 바뀌었다, 서울의 봄'
+        ],
+        eventTextNum: 0,
+        interval: null,
       }
     },
     methods:{
@@ -57,6 +60,19 @@
       Movies : Movies,
       SearchBar : SearchBar,
 
+    },
+    mounted() {
+      this.interval = setInterval(() => {
+        if(this.eventTextNum == this.text.length - 1){
+          this.eventTextNum = 0;
+        }
+        else{
+          this.eventTextNum += 1;
+        }
+      },3000);
+    },
+    unmounted(){
+      clearInterval(this.interval); // 인터발 해제
     }
   }
 </script>
