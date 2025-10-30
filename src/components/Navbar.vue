@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar">
-        <a href="#">Home</a>
+        <a href="http://localhost:8080/">Home</a>
         <a href="#">Movies</a>
         <a href="#">About</a>
     </nav>
@@ -12,12 +12,12 @@ export default {
 </script>
 <style>
     .navbar {
-        background: #000;
+        background: black;
         padding: 20px;
     }
 
     .navbar a{
-        color: #fff;
+        color: white;
         text-decoration: none;
         padding: 1em;
     }

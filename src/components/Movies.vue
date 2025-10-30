@@ -9,7 +9,7 @@
         <h3 class="bg-yellow">{{ movie.title }}</h3>
         <p>개봉 : {{ movie.year }}</p>
         <p>장르 : {{ movie.category }}</p>
-        <button @:click="$emit('increseLike', movie.id)">좋아요</button>
+        <button class="like-btn" @:click="$emit('increseLike', movie.id)">좋아요</button>
         <span>❤️ {{ movie.like }}</span>
         <p>
             <button @click="$emit('openModal', movie.id)">상세보기</button>
@@ -31,4 +31,6 @@ export default {
     .container {
         padding: 20px;
     }
+
+    
 </style>

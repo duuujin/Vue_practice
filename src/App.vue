@@ -81,6 +81,8 @@
   *{
     box-sizing: border-box;
     margin: 0;
+    /* background-color: black; */
+    /* color: white; */
   }
 
   body {
@@ -136,10 +138,15 @@
   }
 
   .modal .inner {
-    background: #fff;
-    width: 80%;
+    background: white;
+    width: 50%;
     padding: 20px;
     border-radius: 10px;
+  }
+
+  .movieImg {
+    width: 70%;
+    text-align: center;
   }
 
 </style>
